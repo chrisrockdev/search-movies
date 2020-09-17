@@ -4,7 +4,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const Banner = (props) => {
+const Banner = () => {
     var settings = {
         className: "center",
         centerMode: true,
@@ -43,10 +43,21 @@ const Banner = (props) => {
             }
           ]
       };
+
+     const bannerSlide = () => {
+
+        fetch(`https://api.themoviedb.org/3/trending/all/day??api_key=${this.apiKey}&language=pt-BR`)
+        .then(data => data.json())
+        .then(data => {
+          this.setState({ moviesBanner: data.results})
+          console.log(data);
+        })
+      }
     
     return (
         <div className="container" style={{ marginBottom: "40px" }} >
             <Slider {...settings}>
+                {console.log(1)}
                 <div>
                     <h3>1</h3>
                 </div>

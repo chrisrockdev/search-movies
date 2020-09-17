@@ -7,6 +7,7 @@ import Pagination from '../pagination/Pagination';
 import MovieInfo from '../movieInfo/MovieInfo';
 import Banner from '../banner/Banner';
 
+
 class App extends Component {
   constructor() {
     super()
@@ -31,17 +32,7 @@ class App extends Component {
       console.log(data);
     })
   }
-
-  bannerSlide = (data) => {
-
-    fetch(`https://api.themoviedb.org/3/trending/all/day??api_key=${this.apiKey}&language=pt-BR`)
-    .then(data => data.json())
-    .then(data => {
-      this.setState({ moviesBanner: data.results})
-      console.log(data);
-    })
-  }
-
+  
   handleChange = (e) => {
     this.setState({ search: e.target.value })
   }
