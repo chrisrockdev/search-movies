@@ -1,15 +1,18 @@
 import React ,{ Component } from 'react';
-import Nav from './Nav';
-import SearchArea from './search/SearchArea';
-import MovieList from './MovieList';
-import Pagination from './Pagination';
-import MovieInfo from './MovieInfo';
+
+import Nav from '../nav/Nav';
+import SearchArea from '../search/SearchArea';
+import MovieList from '../movieList/MovieList';
+import Pagination from '../pagination/Pagination';
+import MovieInfo from '../movieInfo/MovieInfo';
+import Banner from '../banner/Banner';
 
 class App extends Component {
   constructor() {
     super()
     this.state = {
       movies: [],
+      moviesBanner: [],
       search: '',
       totalResults: 0,
       currentPage: 1,
@@ -25,6 +28,16 @@ class App extends Component {
     .then(data => data.json())
     .then(data => {
       this.setState({ movies: [...data.results], totalResults: data.total_results})
+      console.log(data);
+    })
+  }
+
+  bannerSlide = (data) => {
+
+    fetch(`https://api.themoviedb.org/3/trending/all/day??api_key=${this.apiKey}&language=pt-BR`)
+    .then(data => data.json())
+    .then(data => {
+      this.setState({ moviesBanner: data.results})
       console.log(data);
     })
   }
@@ -62,6 +75,7 @@ class App extends Component {
             {this.state.currentMovie == null ? 
               <div>
                 <SearchArea handleSubmit={this.handleSubmit} handleChange={this.handleChange} />
+                <Banner bannerSlide={this.bannerSlide} />
                 <MovieList viewMovieInfo={this.viewMovieInfo} movies={this.state.movies} />
               </div> :
                 <MovieInfo currentMovie={this.state.currentMovie} closeMovieInfo={this.closeMovieInfo} />
